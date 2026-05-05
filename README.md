@@ -1,40 +1,75 @@
-# 🎬 PFE Defense v13 FINAL ✅
+# 🎬 PFE Defense v15 — STUNNING Edition ✨
 
-## 🔧 Fixed in v13
-- **Slide 15 (Closing/Final)** completely rewritten with ULTRA-SIMPLE CSS:
-  - Solid gradient background (no overlay div, no pseudo-element, no animation)
-  - Plain centered content with no z-index complications
-  - Test it isolated: open `test_slide_15.html`
+## ✨ What's NEW in v15
 
-## 🚀 How to use
+### 🎯 Visible Slide Counter for Jury
+- **Big badge in top-left corner** — shows "01" / "02" / etc. very clearly
+- Colored gradient number (navy → green) that flashes on every transition
+- Chapter name displayed below the number
+- Totally readable from any distance in the room
+
+### 🎨 Beautiful Animations Everywhere
+- **Staggered entrance animations** on every slide (content rises softly with delay)
+- **TOC items cascade** in like a wave
+- **Flip cards spring in** with 3D rotation effect
+- **Skills cards bounce** in sequentially  
+- **Roadmap cards slide** from the side
+- **Pillars (Research Question)** pop in with elastic motion
+- **Cockpit tabs** appear one after another
+
+### 🌌 Floating Particles in Background
+- 8 subtle colored particles floating across the screen
+- Different speeds and colors (navy, green, violet, amber)
+- Adds visual depth without distraction
+
+### 📊 Enhanced Progress Bar
+- Thicker (6px instead of 3px)
+- Animated shine sweeping across
+- Glowing effect with green shadow
+- Smoother transition (cubic-bezier)
+
+### 🎬 Smoother Slide Transitions
+- Subtle scale-in effect (0.98 → 1.0)
+- Cubic-bezier easing for natural motion
+- All children fade-rise on entry
+
+## 🚀 Quick Start
 1. Unzip — keep folder structure
 2. Double-click `PFE_Defense.html`
 3. Press **F** for fullscreen
 4. Use **→ / ←** to navigate
 
-## 🆘 If slide 15 is still blank
-Open `test_slide_15.html` — this is the slide 15 ISOLATED.
-- If it shows correctly → the issue is in the slide-deck system
-- If it's also blank → it's a font/browser issue (try Chrome)
-
-Tell me what you see and I will fix the exact problem.
-
-## 📋 16 slides
-1. Cold Open · 2. Title · 3. TOC · 4. Problématique · 5. Stage
-6. Journey + Agile · 7. Problem · 8. Pipeline + ROI · 9. Finding
-10. Before/After · 11. Cockpit · 12. Roadmap · 13. Skills
-14. Callback · **15. Closing (FIXED v13)** · 16. Q&A
+## 📋 16 Slides
+| # | Slide | Time |
+|---|---|---|
+| 01 | Cold Open | 1:30 |
+| 02 | Title (with university logos) | 0:30 |
+| 03 | Table of Contents | 0:20 |
+| 04 | **Research Question** | 0:40 |
+| 05 | The Stage (4 uniform cards) | 1:30 |
+| 06 | Journey + Agile rituals | 1:50 |
+| 07 | The Problem (animated dialogue) | 1:00 |
+| 08 | Pipeline + ROI €0 | 2:00 |
+| 09 | The Finding (Tuesday peak) | 1:20 |
+| 10 | Before / After | 1:00 |
+| 11 | The Cockpit (interactive tabs) | 1:50 |
+| 12 | Roadmap (3D illustrated) | 1:15 |
+| 13 | Skills Acquired | 1:00 |
+| 14 | Callback | 0:30 |
+| 15 | Closing | 0:25 |
+| 16 | Q&A | open |
 
 ## ⌨️ Keyboard
 - `→` / Space / PgDn — next slide
 - `←` / PgUp — previous slide
 - `F` — fullscreen
 - `1-9` `0` — jump to slide N
+- `Home` / `End` — first / last
 
 ## ✅ Validation
-- Compile: ✓ no errors
 - All 16 slides render with content (server-side React) ✓
-- SlideFinal source = 229 chars HTML output ✓
-- No z-index conflicts ✓
-- No problematic absolute positioning ✓
-- No pseudo-elements that could fail in some browsers ✓
+- JSX balance: 256 opens / 231 closes / 25 self-closing = 0 ✓
+- All animations CSS-only (no JavaScript animation libraries) ✓
+- All 11 images verified present ✓
+- Counter badge visible from anywhere ✓
+- Particles render smoothly ✓

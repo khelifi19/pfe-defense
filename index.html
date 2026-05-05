@@ -45,18 +45,322 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .slide-inner.tall { align-items: flex-start; padding-top: 100px; }
 
 /* ========== TOPBAR ========== */
-.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: rgba(244,247,246,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line-soft); pointer-events: none; transition: background 0.4s; }
-.topbar.dark { background: rgba(0,22,38,0.85); border-bottom-color: rgba(255,255,255,0.08); }
-.topbar-brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--navy); letter-spacing: 0.05em; }
-.topbar.dark .topbar-brand { color: rgba(255,255,255,0.85); }
-.brand-mark { width: 24px; height: 24px; background: var(--navy); border-radius: 4px; display: grid; place-items: center; }
-.topbar.dark .brand-mark { background: rgba(255,255,255,0.15); }
-.brand-mark::before { content: ''; width: 8px; height: 8px; background: var(--green); border-radius: 1px; transform: rotate(45deg); }
-.topbar-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink-muted); text-transform: uppercase; }
-.topbar.dark .topbar-meta { color: rgba(255,255,255,0.5); }
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 99; display: flex; align-items: center; justify-content: flex-end; padding: 24px 28px; background: transparent; pointer-events: none; transition: background 0.4s; }
+.topbar-brand { display: none; }
+.topbar-meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); letter-spacing: 0.15em; text-transform: uppercase; pointer-events: none; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); animation: badgeSlideIn 0.6s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.topbar.dark .topbar-meta { background: rgba(0,22,38,0.7); color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
+.brand-mark { display: none; }
 
-.progress-track { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(0,42,84,0.08); z-index: 99; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, var(--navy), var(--green)); transition: width 0.5s ease; }
+/* ============================================================
+   ENHANCED NAVIGATION & SLIDE COUNTER (v15+)
+   ============================================================ */
+
+/* Big visible slide counter badge — top-left corner */
+.slide-counter-badge {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 10px 18px 10px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 24px rgba(0, 42, 84, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: badgeSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.slide-counter-badge.dark {
+  background: rgba(0, 22, 38, 0.85);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+@keyframes badgeSlideIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.counter-num {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: rgba(0, 165, 80, 0.08);
+  border: 1.5px solid rgba(0, 165, 80, 0.2);
+}
+.slide-counter-badge.dark .counter-num {
+  background: linear-gradient(135deg, #fff 0%, var(--green-soft) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-color: rgba(52, 199, 122, 0.1);
+  border-color: rgba(52, 199, 122, 0.3);
+}
+.counter-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--line);
+}
+.slide-counter-badge.dark .counter-divider {
+  background: rgba(255, 255, 255, 0.15);
+}
+.counter-info { display: flex; flex-direction: column; gap: 2px; }
+.counter-of {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.slide-counter-badge.dark .counter-of { color: rgba(255, 255, 255, 0.55); }
+.counter-of strong { color: var(--navy); font-weight: 700; }
+.slide-counter-badge.dark .counter-of strong { color: #fff; }
+.counter-chapter {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+}
+.slide-counter-badge.dark .counter-chapter { color: #fff; }
+
+/* Enhanced progress track (thicker, more visible) */
+.progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: rgba(0, 42, 84, 0.06);
+  z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy) 0%, var(--green) 50%, var(--green-soft) 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(0, 165, 80, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: progressShine 2.5s ease-in-out infinite;
+}
+@keyframes progressShine {
+  to { left: 150%; }
+}
+
+/* Floating background particles */
+.particle-field {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--green);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: particleFloat 20s linear infinite;
+}
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 18s; }
+.particle:nth-child(2) { left: 25%; animation-delay: -5s; animation-duration: 22s; background: var(--navy); }
+.particle:nth-child(3) { left: 40%; animation-delay: -10s; animation-duration: 24s; }
+.particle:nth-child(4) { left: 55%; animation-delay: -3s; animation-duration: 20s; background: var(--violet); }
+.particle:nth-child(5) { left: 70%; animation-delay: -15s; animation-duration: 26s; }
+.particle:nth-child(6) { left: 85%; animation-delay: -8s; animation-duration: 19s; background: var(--amber); }
+.particle:nth-child(7) { left: 5%; animation-delay: -12s; animation-duration: 23s; background: var(--navy); }
+.particle:nth-child(8) { left: 60%; animation-delay: -18s; animation-duration: 21s; }
+@keyframes particleFloat {
+  from { transform: translateY(110vh) scale(0); opacity: 0; }
+  10% { opacity: 0.2; }
+  90% { opacity: 0.2; }
+  to { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+.dark-mode .particle { opacity: 0.25; }
+
+/* Slide entrance animations — staggered children */
+.slide.active .stage-content > *,
+.slide.active .toc-content > *,
+.slide.active .skills-content > *,
+.slide.active .roadmap-content > *,
+.slide.active .metaphor-content > *,
+.slide.active .journey-content > *,
+.slide.active .problematique-content > *,
+.slide.active .discovery-content > *,
+.slide.active .comparison-content > *,
+.slide.active .cockpit-content > *,
+.slide.active .final-content > * {
+  animation: contentRise 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.slide.active .stage-content > *:nth-child(1),
+.slide.active .toc-content > *:nth-child(1),
+.slide.active .skills-content > *:nth-child(1),
+.slide.active .roadmap-content > *:nth-child(1),
+.slide.active .metaphor-content > *:nth-child(1),
+.slide.active .journey-content > *:nth-child(1),
+.slide.active .problematique-content > *:nth-child(1),
+.slide.active .discovery-content > *:nth-child(1),
+.slide.active .comparison-content > *:nth-child(1),
+.slide.active .cockpit-content > *:nth-child(1),
+.slide.active .final-content > *:nth-child(1) { animation-delay: 0.05s; }
+
+.slide.active .stage-content > *:nth-child(2),
+.slide.active .toc-content > *:nth-child(2),
+.slide.active .skills-content > *:nth-child(2),
+.slide.active .roadmap-content > *:nth-child(2),
+.slide.active .metaphor-content > *:nth-child(2),
+.slide.active .journey-content > *:nth-child(2),
+.slide.active .problematique-content > *:nth-child(2),
+.slide.active .discovery-content > *:nth-child(2),
+.slide.active .comparison-content > *:nth-child(2),
+.slide.active .cockpit-content > *:nth-child(2),
+.slide.active .final-content > *:nth-child(2) { animation-delay: 0.15s; }
+
+.slide.active .stage-content > *:nth-child(3),
+.slide.active .toc-content > *:nth-child(3),
+.slide.active .skills-content > *:nth-child(3),
+.slide.active .roadmap-content > *:nth-child(3),
+.slide.active .metaphor-content > *:nth-child(3),
+.slide.active .journey-content > *:nth-child(3),
+.slide.active .problematique-content > *:nth-child(3),
+.slide.active .discovery-content > *:nth-child(3),
+.slide.active .comparison-content > *:nth-child(3),
+.slide.active .cockpit-content > *:nth-child(3),
+.slide.active .final-content > *:nth-child(3) { animation-delay: 0.25s; }
+
+.slide.active .stage-content > *:nth-child(4),
+.slide.active .toc-content > *:nth-child(4),
+.slide.active .skills-content > *:nth-child(4),
+.slide.active .roadmap-content > *:nth-child(4),
+.slide.active .problematique-content > *:nth-child(4) { animation-delay: 0.35s; }
+
+.slide.active .stage-content > *:nth-child(5),
+.slide.active .skills-content > *:nth-child(5),
+.slide.active .roadmap-content > *:nth-child(5) { animation-delay: 0.45s; }
+
+@keyframes contentRise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TOC items — staggered cascade */
+.slide.active .toc-grid .toc-item {
+  animation: tocItemRise 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.slide.active .toc-grid .toc-item:nth-child(1) { animation-delay: 0.1s; }
+.slide.active .toc-grid .toc-item:nth-child(2) { animation-delay: 0.18s; }
+.slide.active .toc-grid .toc-item:nth-child(3) { animation-delay: 0.26s; }
+.slide.active .toc-grid .toc-item:nth-child(4) { animation-delay: 0.34s; }
+.slide.active .toc-grid .toc-item:nth-child(5) { animation-delay: 0.42s; }
+.slide.active .toc-grid .toc-item:nth-child(6) { animation-delay: 0.50s; }
+.slide.active .toc-grid .toc-item:nth-child(7) { animation-delay: 0.58s; }
+.slide.active .toc-grid .toc-item:nth-child(8) { animation-delay: 0.66s; }
+@keyframes tocItemRise {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Flip cards entrance */
+.slide.active .flip-cards .flip-card {
+  animation: cardEntrance 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.slide.active .flip-cards .flip-card:nth-child(1) { animation-delay: 0.2s; }
+.slide.active .flip-cards .flip-card:nth-child(2) { animation-delay: 0.32s; }
+.slide.active .flip-cards .flip-card:nth-child(3) { animation-delay: 0.44s; }
+.slide.active .flip-cards .flip-card:nth-child(4) { animation-delay: 0.56s; }
+@keyframes cardEntrance {
+  from { opacity: 0; transform: translateY(40px) rotateY(-15deg); }
+  to { opacity: 1; transform: translateY(0) rotateY(0); }
+}
+
+/* Skills cards entrance */
+.slide.active .skills-grid .skill-card {
+  animation: skillEntrance 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.slide.active .skills-grid .skill-card:nth-child(1) { animation-delay: 0.2s; }
+.slide.active .skills-grid .skill-card:nth-child(2) { animation-delay: 0.35s; }
+.slide.active .skills-grid .skill-card:nth-child(3) { animation-delay: 0.5s; }
+@keyframes skillEntrance {
+  from { opacity: 0; transform: translateY(30px) scale(0.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Roadmap cards entrance */
+.slide.active .roadmap-grid .roadmap-card {
+  animation: roadmapEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.slide.active .roadmap-grid .roadmap-card:nth-child(1) { animation-delay: 0.25s; }
+.slide.active .roadmap-grid .roadmap-card:nth-child(2) { animation-delay: 0.4s; }
+.slide.active .roadmap-grid .roadmap-card:nth-child(3) { animation-delay: 0.55s; }
+@keyframes roadmapEntrance {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Pillars (problematique) entrance */
+.slide.active .problematique-pillars .problematique-pillar {
+  animation: pillarRise 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.slide.active .problematique-pillars .problematique-pillar:nth-child(1) { animation-delay: 0.4s; }
+.slide.active .problematique-pillars .problematique-pillar:nth-child(2) { animation-delay: 0.55s; }
+.slide.active .problematique-pillars .problematique-pillar:nth-child(3) { animation-delay: 0.7s; }
+@keyframes pillarRise {
+  from { opacity: 0; transform: translateY(30px) scale(0.85); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Cockpit tabs entrance */
+.slide.active .cockpit-tabs .cockpit-tab {
+  animation: tabPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.slide.active .cockpit-tabs .cockpit-tab:nth-child(1) { animation-delay: 0.15s; }
+.slide.active .cockpit-tabs .cockpit-tab:nth-child(2) { animation-delay: 0.22s; }
+.slide.active .cockpit-tabs .cockpit-tab:nth-child(3) { animation-delay: 0.29s; }
+.slide.active .cockpit-tabs .cockpit-tab:nth-child(4) { animation-delay: 0.36s; }
+.slide.active .cockpit-tabs .cockpit-tab:nth-child(5) { animation-delay: 0.43s; }
+.slide.active .cockpit-tabs .cockpit-tab:nth-child(6) { animation-delay: 0.50s; }
+@keyframes tabPop {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Highlight pulse on counter when it changes */
+.slide-counter-badge.changed .counter-num {
+  animation: counterFlash 0.6s ease;
+}
+@keyframes counterFlash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(0, 165, 80, 0.2); }
+  100% { transform: scale(1); }
+}
+
+/* Subtle scale-in for active slide content */
+.slide { transform: scale(0.98); }
+.slide.active { transform: scale(1); transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); }
 
 /* ========== NAV ========== */
 .chapter-markers { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); padding: 10px 16px; border-radius: 100px; border: 1px solid var(--line); box-shadow: var(--shadow-md); }
@@ -180,6 +484,8 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .flip-card-front { background: #fff; position: relative; }
 .flip-card-front-bg { position: absolute; inset: 0; z-index: 0; }
 .flip-card-front-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.flip-card-cod-bg { overflow: hidden; }
+.flip-card-cod-bg svg { width: 100%; height: 100%; display: block; }
 .flip-card-front-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,42,84,0) 30%, rgba(0,42,84,0.85) 100%); z-index: 1; }
 .flip-card-front-content { position: relative; z-index: 2; padding: 28px 24px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
 .flip-card-front-name { color: #fff; font-family: var(--font-serif); font-weight: 700; font-size: 30px; text-align: left; text-shadow: 0 2px 16px rgba(0,0,0,0.5); margin-bottom: 8px; line-height: 1.1; }
@@ -762,7 +1068,7 @@ const SlideProblematique = () => (
     <div className="problematique-content">
       <div className="problematique-eyebrow">
         <span className="problematique-eyebrow-dot"/>
-        Research Question · Problématique
+        Research Question
       </div>
       <div className="problematique-quote-marks">"</div>
       <h2 className="problematique-h">
@@ -791,10 +1097,10 @@ const SlideProblematique = () => (
 
 // ========== SLIDE: STAGE ==========
 const STAGE_CARDS = [
-  { id: 'ca', image: 'assets/ca-real.png', name: 'Crédit Agricole', tag: '01 · The Group', backTitle: 'A cooperative banking giant', backDesc: 'Founded in 1894 as a cooperative for French farmers — today the <em>9th largest bank worldwide</em>. A mutual bank, owned by its 54M sociétaires.', statNum: '54M', statLabel: 'customers · 47 countries', backVariant: '' },
-  { id: 'cagip', image: 'assets/cagip-building.png', name: 'CA-GIP', tag: '02 · The Engine Room', backTitle: 'The shared infrastructure', backDesc: 'Created in 2019 as <em>the centralised IT platform</em> for every entity in the Group. 2,068 employees · 6 datacenters · €1.244 Bn budget.', statNum: '80%', statLabel: 'of Group IT production', backVariant: 'green-bg' },
-  { id: 'lcl', image: 'assets/lcl-real.png', name: 'LCL', tag: '03 · The Client', backTitle: 'Le Crédit Lyonnais', backDesc: 'One of France\'s largest retail banks — <em>the main entity I monitored.</em> Its applications generated the 88,343 incidents I analysed.', statNum: '20.3K', statLabel: 'workstations monitored', backVariant: 'amber-bg' },
-  { id: 'cod', isCOD: true, name: 'COD · Centre of DevOps', tag: '04 · You are here', backTitle: 'Where I belonged', backDesc: 'CA-GIP\'s engineering organisation — four <em>squads</em>: Tools, Cloud, DevOps, Delivery. <strong>I crossed two of them</strong> in six months.', statNum: '2 / 4', statLabel: 'squads · one trajectory', backVariant: 'violet-bg' }
+  { id: 'ca', image: 'assets/ca-real.png', name: 'Crédit Agricole', tag: '01 · The Group', backTitle: 'A cooperative banking giant', backDesc: 'Founded in 1894 as a cooperative for French farmers — today the <em>9th largest bank worldwide</em>. A mutual bank, owned by its 54M member-customers.', statNum: '54M', statLabel: 'customers · 47 countries', backVariant: '' },
+  { id: 'cagip', image: 'assets/cagip-building.png', name: 'CA-GIP', tag: '02 · My host organisation', backTitle: 'The shared infrastructure', backDesc: 'Created in 2019 as <em>the centralised IT platform</em> for every entity in the Group. 2,068 employees · 6 datacenters · €1.244 Bn budget.', statNum: '80%', statLabel: 'of Group IT production', backVariant: 'green-bg' },
+  { id: 'lcl', image: 'assets/lcl-real.png', name: 'LCL', tag: '03 · The monitored entity', backTitle: 'Le Crédit Lyonnais', backDesc: 'One of France\'s largest retail banks — <em>the main entity I monitored.</em> Its applications generated the 88,343 incidents I analysed.', statNum: '20.3K', statLabel: 'workstations monitored', backVariant: 'amber-bg' },
+  { id: 'cod', isCOD: true, name: 'COD', tag: '04 · My team', backTitle: 'Centre of DevOps', backDesc: 'CA-GIP\'s engineering organisation — four <em>squads</em>: Tools, Cloud, DevOps, Delivery. <strong>I crossed two of them</strong> in six months.', statNum: '2 / 4', statLabel: 'squads · one trajectory', backVariant: 'violet-bg' }
 ];
 
 const FlipCard = ({ card }) => {
@@ -804,21 +1110,36 @@ const FlipCard = ({ card }) => {
       <div className="flip-card-side flip-card-front">
         <div className="flip-hint">↻ Click</div>
         {card.isCOD ? (
-          <div className="flip-card-front-bg" style={{background: 'linear-gradient(135deg, #002A54 0%, #007a3a 100%)'}}>
-            <div style={{position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', padding: '40px'}}>
-              <svg viewBox="0 0 200 200" width="100%" height="100%" style={{maxWidth: '180px', maxHeight: '180px'}}>
-                <circle cx="100" cy="100" r="50" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" strokeWidth="2"/>
-                <text x="100" y="105" textAnchor="middle" fontSize="16" fill="#fff" fontFamily="JetBrains Mono" fontWeight="700">COD</text>
-                <circle cx="100" cy="35" r="22" fill="#34c77a" stroke="#fff" strokeWidth="2"/>
-                <text x="100" y="40" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">TOOLS</text>
-                <circle cx="165" cy="100" r="22" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2"/>
-                <text x="165" y="104" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">CLOUD</text>
-                <circle cx="100" cy="165" r="22" fill="#34c77a" stroke="#fff" strokeWidth="2"/>
-                <text x="100" y="169" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">DEVOPS</text>
-                <circle cx="35" cy="100" r="22" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2"/>
-                <text x="35" y="104" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">DELIVERY</text>
-              </svg>
-            </div>
+          <div className="flip-card-front-bg flip-card-cod-bg">
+            <svg viewBox="0 0 400 520" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="codGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#002A54"/>
+                  <stop offset="100%" stopColor="#007a3a"/>
+                </linearGradient>
+                <pattern id="codDots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.15)"/>
+                </pattern>
+              </defs>
+              <rect width="400" height="520" fill="url(#codGrad)"/>
+              <rect width="400" height="520" fill="url(#codDots)"/>
+              <g transform="translate(200, 220)">
+                <circle r="58" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.25)" strokeWidth="2"/>
+                <text y="6" textAnchor="middle" fontSize="20" fill="#fff" fontFamily="JetBrains Mono" fontWeight="700" letterSpacing="2">COD</text>
+                <circle cx="0" cy="-110" r="26" fill="#34c77a" stroke="#fff" strokeWidth="2.5"/>
+                <text y="-106" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">TOOLS</text>
+                <circle cx="110" cy="0" r="26" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2.5"/>
+                <text x="110" y="4" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">CLOUD</text>
+                <circle cx="0" cy="110" r="26" fill="#34c77a" stroke="#fff" strokeWidth="2.5"/>
+                <text y="114" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">DEVOPS</text>
+                <circle cx="-110" cy="0" r="26" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2.5"/>
+                <text x="-110" y="4" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">DELIVERY</text>
+                <line x1="0" y1="-84" x2="0" y2="-58" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="84" y1="0" x2="58" y2="0" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="0" y1="84" x2="0" y2="58" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="-84" y1="0" x2="-58" y2="0" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+              </g>
+            </svg>
           </div>
         ) : (
           <div className="flip-card-front-bg"><img src={card.image} alt={card.name}/></div>
@@ -1309,7 +1630,7 @@ const SLIDES = [
   { id: 'cold',       cls: 'slide-cold',       comp: SlideCold,       label: 'Cold Open',         chapter: 'Hook',         time: '90s',  dark: true  },
   { id: 'title',      cls: 'slide-title',      comp: SlideTitle,      label: 'Title',             chapter: 'Identity',     time: '30s',  dark: false },
   { id: 'toc',        cls: 'slide-toc',        comp: SlideTOC,        label: 'Table of Contents', chapter: 'Roadmap',      time: '20s',  dark: false },
-  { id: 'problematique', cls: 'slide-problematique', comp: SlideProblematique, label: 'Problématique', chapter: 'Question',  time: '40s',  dark: true  },
+  { id: 'problematique', cls: 'slide-problematique', comp: SlideProblematique, label: 'Research Question', chapter: 'Question',  time: '40s',  dark: true  },
   { id: 'stage',      cls: 'slide-stage',      comp: SlideStage,      label: 'The Stage',         chapter: 'Chapter I',    time: '90s',  dark: false },
   { id: 'journey',    cls: 'slide-journey',    comp: SlideJourney,    label: 'Journey + Agile',   chapter: 'Chapter II',   time: '110s', dark: false },
   { id: 'problem',    cls: 'slide-problem',    comp: SlideProblem,    label: 'The Problem',       chapter: 'Chapter III',  time: '60s',  dark: true  },
@@ -1326,11 +1647,14 @@ const SLIDES = [
 
 const App = () => {
   const [idx, setIdx] = useState(0);
+  const [counterPulse, setCounterPulse] = useState(false);
   const total = SLIDES.length;
   const go = useCallback((n) => {
     if (n < 0) n = 0;
     if (n >= total) n = total - 1;
     setIdx(n);
+    setCounterPulse(true);
+    setTimeout(() => setCounterPulse(false), 600);
   }, [total]);
 
   useEffect(() => {
@@ -1360,10 +1684,28 @@ const App = () => {
   return (
     <>
       <CustomCursor/>
+      <div className="particle-field" aria-hidden="true">
+        <div className="particle"/>
+        <div className="particle"/>
+        <div className="particle"/>
+        <div className="particle"/>
+        <div className="particle"/>
+        <div className="particle"/>
+        <div className="particle"/>
+        <div className="particle"/>
+      </div>
       <div className="progress-track"><div className="progress-fill" style={{width: `${progress}%`}}/></div>
+      <div className={`slide-counter-badge ${isDark ? 'dark' : ''} ${counterPulse ? 'changed' : ''}`}>
+        <div className="counter-num">{String(idx + 1).padStart(2, '0')}</div>
+        <div className="counter-divider"/>
+        <div className="counter-info">
+          <div className="counter-of"><strong>SLIDE</strong> · OF {String(total).padStart(2, '0')}</div>
+          <div className="counter-chapter">{cur.chapter}</div>
+        </div>
+      </div>
       <div className={`topbar ${isDark ? 'dark' : ''}`}>
         <div className="topbar-brand"><div className="brand-mark"/>YASSINE.KHELIFI / PFE-DEFENSE</div>
-        <div className="topbar-meta">{String(idx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} · {cur.chapter} · {cur.time}</div>
+        <div className="topbar-meta">{cur.label} · {cur.time}</div>
       </div>
       <div className="deck">
         {SLIDES.map((s, i) => {
@@ -1377,7 +1719,7 @@ const App = () => {
         <div><span className="kbd">F</span> fullscreen · <span className="kbd">1-9</span> jump</div>
       </div>
       <div className={`chapter-markers ${isDark ? 'dark' : ''}`}>
-        {SLIDES.map((s, i) => <button key={s.id} className={`chapter-marker ${i === idx ? 'active' : ''}`} onClick={() => go(i)} title={s.label}/>)}
+        {SLIDES.map((s, i) => <button key={s.id} className={`chapter-marker ${i === idx ? 'active' : ''}`} onClick={() => go(i)} title={`${i+1}. ${s.label}`}/>)}
       </div>
       <div className="nav-controls">
         <button className="nav-btn" onClick={() => go(idx - 1)} disabled={idx === 0} title="Previous (←)">‹</button>
