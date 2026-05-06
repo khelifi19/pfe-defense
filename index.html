@@ -502,34 +502,45 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .stage-instruction { margin-top: 32px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.15em; color: var(--ink-muted); text-transform: uppercase; }
 .stage-instruction strong { color: var(--green); background: rgba(0,165,80,0.08); padding: 4px 10px; border-radius: 4px; }
 
-/* ========== SLIDE: JOURNEY ========== */
+/* ========== SLIDE: JOURNEY (flip-card design) ========== */
 .slide-journey { background: var(--bg); }
 .journey-content { width: 100%; max-width: 1400px; }
-.journey-eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.25em; color: var(--green); margin-bottom: 16px; text-transform: uppercase; text-align: center; }
-.journey-h { font-family: var(--font-serif); font-weight: 700; font-size: clamp(32px,4vw,52px); line-height: 1.1; text-align: center; margin-bottom: 36px; letter-spacing: -0.02em; color: var(--navy); }
+.journey-eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.25em; color: var(--green); margin-bottom: 14px; text-transform: uppercase; text-align: center; }
+.journey-h { font-family: var(--font-serif); font-weight: 700; font-size: clamp(32px,4vw,52px); line-height: 1.1; text-align: center; margin-bottom: 32px; letter-spacing: -0.02em; color: var(--navy); }
 .journey-h em { color: var(--green); font-style: italic; }
-.journey-track { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: stretch; margin-bottom: 28px; }
-.journey-phase { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px 28px; box-shadow: 0 1px 2px rgba(0,42,84,0.06); cursor: none; transition: box-shadow 0.3s; }
-.journey-phase:hover { box-shadow: var(--shadow-xl); }
-.journey-phase.p1 { border-left: 4px solid var(--amber); }
-.journey-phase.p2 { border-left: 4px solid var(--green); }
-.journey-phase-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 6px; }
-.journey-phase-tag { font-family: var(--font-mono); font-size: 11px; margin-bottom: 14px; font-weight: 600; letter-spacing: 0.1em; }
-.journey-phase.p1 .journey-phase-tag { color: var(--amber); }
-.journey-phase.p2 .journey-phase-tag { color: var(--green-deep); }
-.journey-phase-title { font-family: var(--font-serif); font-weight: 700; font-size: 22px; margin-bottom: 14px; line-height: 1.2; color: var(--navy); }
-.journey-phase-mission { font-size: 13px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 12px; }
-.journey-phase-mission strong { color: var(--navy); font-weight: 600; }
-.journey-phase-mission code { font-family: var(--font-mono); font-size: 11px; background: rgba(0,165,80,0.1); padding: 1px 6px; border-radius: 3px; color: var(--green-deep); }
-.journey-phase-quote { font-style: italic; color: var(--ink-muted); font-size: 12px; border-left: 2px solid var(--line); padding-left: 12px; margin: 12px 0; }
-.journey-phase-stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
-.stack-pill { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(0,165,80,0.08); border: 1px solid rgba(0,165,80,0.25); color: var(--green-deep); padding: 3px 9px; border-radius: 100px; font-weight: 500; }
-.journey-phase.p1 .stack-pill { background: rgba(232,153,35,0.08); border-color: rgba(232,153,35,0.3); color: #b67414; }
-.journey-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
-.journey-arrow-line { width: 50px; height: 2px; background: linear-gradient(90deg, var(--amber), var(--green)); position: relative; overflow: hidden; }
-.journey-arrow-line::before { content: ''; position: absolute; top: 0; left: -25px; width: 25px; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: arrowSlide 2s ease-in-out infinite; }
-.journey-arrow-line::after { content: ''; position: absolute; right: -2px; top: -5px; border: 6px solid transparent; border-left-color: var(--green); }
-.journey-arrow-label { font-family: var(--font-mono); font-size: 9px; color: var(--ink-muted); letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; text-align: center; }
+.journey-flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; perspective: 1500px; max-width: 1200px; margin: 0 auto 28px; }
+.journey-flip-card { height: 380px; position: relative; cursor: pointer; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+.journey-flip-card.flipped { transform: rotateY(180deg); }
+.journey-flip-side { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; box-shadow: 0 8px 32px rgba(0,42,84,0.12); border: 1px solid var(--line); }
+.journey-flip-front { display: flex; flex-direction: column; justify-content: flex-end; padding: 0; position: relative; }
+.journey-flip-back { transform: rotateY(180deg); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+.journey-flip-card.p1 .journey-flip-back { background: linear-gradient(135deg, #fff5e1 0%, #ffeac0 100%); border-top: 4px solid var(--amber); }
+.journey-flip-card.p2 .journey-flip-back { background: linear-gradient(135deg, #ebf8ee 0%, #d8f0e0 100%); border-top: 4px solid var(--green); }
+.journey-flip-bg { position: absolute; inset: 0; z-index: 0; }
+.journey-flip-bg svg { width: 100%; height: 100%; display: block; }
+.journey-flip-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,42,84,0) 35%, rgba(0,30,60,0.92) 100%); z-index: 1; }
+.journey-flip-content { position: relative; z-index: 2; padding: 28px 30px; color: #fff; }
+.journey-flip-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+.journey-flip-card.p1 .journey-flip-num { color: #ffd590; }
+.journey-flip-card.p2 .journey-flip-num { color: #b3f0c5; }
+.journey-flip-title { font-family: var(--font-serif); font-weight: 700; font-size: 26px; line-height: 1.15; margin-bottom: 10px; color: #fff; }
+.journey-flip-subtitle { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: rgba(255,255,255,0.8); text-transform: uppercase; }
+.journey-flip-hint { position: absolute; top: 16px; right: 16px; background: rgba(0,165,80,0.95); color: #fff; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; padding: 6px 11px; border-radius: 100px; z-index: 3; font-weight: 600; text-transform: uppercase; box-shadow: 0 4px 12px rgba(0,165,80,0.4); animation: flipPulse 2s ease-in-out infinite; }
+.journey-flip-card.p1 .journey-flip-hint { background: rgba(232,153,35,0.95); box-shadow: 0 4px 12px rgba(232,153,35,0.4); }
+.journey-flip-back-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; }
+.journey-flip-card.p1 .journey-flip-back-num { color: #b67414; }
+.journey-flip-card.p2 .journey-flip-back-num { color: var(--green-deep); }
+.journey-flip-back-title { font-family: var(--font-serif); font-weight: 700; font-size: 20px; color: var(--navy); line-height: 1.2; }
+.journey-flip-back-mission { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+.journey-flip-back-mission strong { color: var(--navy); font-weight: 600; }
+.journey-flip-back-mission code { font-family: var(--font-mono); font-size: 11px; background: rgba(0,42,84,0.08); padding: 1px 6px; border-radius: 3px; color: var(--navy); }
+.journey-flip-back-quote { font-style: italic; color: var(--navy); font-size: 12px; padding: 10px 14px; background: rgba(255,255,255,0.6); border-left: 3px solid; border-radius: 4px; margin-top: auto; }
+.journey-flip-card.p1 .journey-flip-back-quote { border-color: var(--amber); }
+.journey-flip-card.p2 .journey-flip-back-quote { border-color: var(--green); }
+.journey-flip-back-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.stack-pill { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; font-weight: 600; }
+.journey-flip-card.p1 .stack-pill { background: rgba(232,153,35,0.18); border: 1px solid rgba(232,153,35,0.4); color: #8a5712; }
+.journey-flip-card.p2 .stack-pill { background: rgba(0,165,80,0.18); border: 1px solid rgba(0,165,80,0.4); color: var(--green-deep); }
 .agile-banner { background: linear-gradient(135deg, #fff 0%, #f0faf3 100%); border: 1px solid var(--line); border-left: 4px solid var(--violet); border-radius: 12px; padding: 18px 24px; display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; cursor: none; transition: box-shadow 0.3s; }
 .agile-banner:hover { box-shadow: var(--shadow-lg); }
 .agile-icon { width: 48px; height: 48px; background: var(--violet); border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; }
@@ -567,9 +578,23 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .metaphor-h { font-family: var(--font-serif); font-weight: 700; font-size: clamp(32px,4vw,56px); text-align: center; margin-bottom: 12px; line-height: 1.1; color: var(--navy); letter-spacing: -0.02em; }
 .metaphor-h em { color: var(--amber); font-style: italic; }
 .metaphor-sub { text-align: center; font-size: 15px; color: var(--ink-soft); margin-bottom: 36px; font-style: italic; }
-.metaphor-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
-.metaphor-card { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 22px 16px; position: relative; cursor: none; transition: box-shadow 0.3s, border-color 0.3s, background 0.3s, transform 0.3s; }
-.metaphor-card:hover { background: #fff; border-color: var(--green); box-shadow: var(--shadow-xl); transform: translateY(-4px); }
+.metaphor-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; perspective: 1200px; }
+.metaphor-card { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 22px 16px; position: relative; cursor: none; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
+.metaphor-row:hover .metaphor-card { opacity: 0.5; transform: scale(0.94); filter: blur(0.5px); }
+.metaphor-row:hover .metaphor-card:hover {
+  opacity: 1;
+  transform: scale(1.15) translateY(-16px) translateZ(50px);
+  filter: blur(0);
+  background: linear-gradient(135deg, #fff 0%, #f0faf3 100%);
+  border-color: var(--green);
+  box-shadow: 0 30px 60px rgba(0, 165, 80, 0.35), 0 12px 24px rgba(0, 165, 80, 0.2), 0 0 0 4px rgba(0, 165, 80, 0.1);
+  z-index: 10;
+}
+.metaphor-card:hover .metaphor-emoji { transform: scale(1.4) rotate(-8deg); }
+.metaphor-arrow { position: absolute; top: 50%; right: -10px; transform: translateY(-50%); z-index: 5; color: var(--green); font-family: var(--font-mono); font-size: 18px; font-weight: bold; pointer-events: none; transition: opacity 0.3s; }
+.metaphor-row:hover .metaphor-arrow { opacity: 0.3; }
+.metaphor-card:hover .metaphor-arrow { opacity: 1; }
+.metaphor-card:last-child .metaphor-arrow { display: none; }
 .metaphor-num { font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); letter-spacing: 0.2em; margin-bottom: 10px; }
 .metaphor-emoji { font-size: 38px; margin-bottom: 10px; display: block; transition: transform 0.4s; }
 .metaphor-card:hover .metaphor-emoji { transform: scale(1.2) rotate(-8deg); }
@@ -664,11 +689,14 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .roadmap-h em { color: var(--violet); font-style: italic; }
 .roadmap-sub { text-align: center; font-size: 16px; color: var(--ink-soft); margin-bottom: 40px; font-style: italic; }
 .roadmap-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 28px; }
-.roadmap-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; cursor: none; transition: box-shadow 0.3s, transform 0.3s; }
-.roadmap-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-6px); }
+.roadmap-card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; cursor: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.roadmap-card:hover { transform: translateY(-8px); }
 .roadmap-card.now { border-top: 5px solid var(--green); }
+.roadmap-card.now:hover { background: linear-gradient(135deg, rgba(0,165,80,0.12) 0%, rgba(52,199,122,0.06) 100%); border-color: rgba(0,165,80,0.4); box-shadow: 0 20px 50px rgba(0,165,80,0.25), 0 8px 16px rgba(0,165,80,0.15); }
 .roadmap-card.next { border-top: 5px solid var(--amber); }
+.roadmap-card.next:hover { background: linear-gradient(135deg, rgba(232,153,35,0.12) 0%, rgba(232,153,35,0.06) 100%); border-color: rgba(232,153,35,0.4); box-shadow: 0 20px 50px rgba(232,153,35,0.25), 0 8px 16px rgba(232,153,35,0.15); }
 .roadmap-card.future { border-top: 5px solid var(--violet); }
+.roadmap-card.future:hover { background: linear-gradient(135deg, rgba(107,70,193,0.12) 0%, rgba(107,70,193,0.06) 100%); border-color: rgba(107,70,193,0.4); box-shadow: 0 20px 50px rgba(107,70,193,0.25), 0 8px 16px rgba(107,70,193,0.15); }
 .roadmap-illustration { width: 100%; height: 110px; border-radius: 12px; margin-bottom: 16px; display: grid; place-items: center; padding: 8px; }
 .roadmap-card.now .roadmap-illustration { background: linear-gradient(135deg, rgba(0,165,80,0.12), rgba(0,165,80,0.04)); }
 .roadmap-card.next .roadmap-illustration { background: linear-gradient(135deg, rgba(232,153,35,0.12), rgba(232,153,35,0.04)); }
@@ -705,11 +733,14 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .skills-h em { color: var(--green); font-style: italic; }
 .skills-sub { text-align: center; font-size: 15px; color: var(--ink-soft); margin-bottom: 40px; font-style: italic; }
 .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.skill-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 24px 22px; cursor: none; transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s; }
-.skill-card:hover { box-shadow: var(--shadow-xl); border-color: var(--green); transform: translateY(-4px); }
+.skill-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 24px 22px; cursor: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.skill-card:hover { transform: translateY(-6px); }
 .skill-card.tech { border-top: 4px solid var(--green); }
+.skill-card.tech:hover { background: linear-gradient(135deg, rgba(0,165,80,0.12) 0%, rgba(52,199,122,0.06) 100%); border-color: rgba(0,165,80,0.4); box-shadow: 0 20px 50px rgba(0,165,80,0.25), 0 8px 16px rgba(0,165,80,0.15); }
 .skill-card.method { border-top: 4px solid var(--violet); }
+.skill-card.method:hover { background: linear-gradient(135deg, rgba(107,70,193,0.12) 0%, rgba(107,70,193,0.06) 100%); border-color: rgba(107,70,193,0.4); box-shadow: 0 20px 50px rgba(107,70,193,0.25), 0 8px 16px rgba(107,70,193,0.15); }
 .skill-card.soft { border-top: 4px solid var(--amber); }
+.skill-card.soft:hover { background: linear-gradient(135deg, rgba(232,153,35,0.12) 0%, rgba(232,153,35,0.06) 100%); border-color: rgba(232,153,35,0.4); box-shadow: 0 20px 50px rgba(232,153,35,0.25), 0 8px 16px rgba(232,153,35,0.15); }
 .skill-icon { width: 48px; height: 48px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 14px; font-size: 26px; }
 .skill-card.tech .skill-icon { background: rgba(0,165,80,0.1); }
 .skill-card.method .skill-icon { background: rgba(107,70,193,0.1); }
@@ -1023,22 +1054,23 @@ const SlideTitle = () => (
 
 // ========== SLIDE: TOC ==========
 const TOC_ITEMS = [
-  { num: '01', chapter: 'Hook', title: 'The Cold Open', time: '90s' },
-  { num: '02', chapter: 'Chapter I', title: 'The Stage', time: '90s' },
-  { num: '03', chapter: 'Chapter II', title: 'Journey + Agile', time: '110s' },
-  { num: '04', chapter: 'Chapter III', title: 'The Problem', time: '60s' },
-  { num: '05', chapter: 'Chapter IV', title: 'Pipeline + ROI', time: '120s' },
-  { num: '06', chapter: 'Chapter V', title: 'The Finding', time: '80s' },
-  { num: '07', chapter: 'Chapter VI', title: 'The Cockpit', time: '110s' },
-  { num: '08', chapter: 'Chapter VII', title: 'Roadmap & Skills', time: '120s' },
+  { num: '01', chapter: 'Hook', title: 'The Cold Open', time: '1:50' },
+  { num: '02', chapter: 'Question', title: 'Research Question', time: '0:50' },
+  { num: '03', chapter: 'Chapter I', title: 'The Stage', time: '1:50' },
+  { num: '04', chapter: 'Chapter II', title: 'Journey + Agile', time: '2:10' },
+  { num: '05', chapter: 'Chapter III', title: 'The Problem', time: '1:20' },
+  { num: '06', chapter: 'Chapter IV', title: 'Pipeline + ROI', time: '2:30' },
+  { num: '07', chapter: 'Chapter V', title: 'The Finding', time: '1:40' },
+  { num: '08', chapter: 'Chapter VI', title: 'The Cockpit', time: '2:20' },
+  { num: '09', chapter: 'Chapter VII', title: 'Roadmap & Skills', time: '2:55' },
 ];
 
 const SlideTOC = () => (
   <div className="slide-inner">
     <div className="toc-content">
       <div className="toc-eyebrow">— What we'll cover —</div>
-      <h2 className="toc-h">A <em>15-minute</em> story.</h2>
-      <p className="toc-sub">Eight chapters · one customer · one cockpit · one engineer.</p>
+      <h2 className="toc-h">From <em>cryptic alerts</em> to <em>strategic clarity</em>.</h2>
+      <p className="toc-sub">Nine chapters · one customer · one cockpit · one engineer.</p>
       <div className="toc-grid">
         {TOC_ITEMS.map((item, i) => (
           <TiltCard key={i} className="toc-item" max={6}>
@@ -1048,8 +1080,7 @@ const SlideTOC = () => (
             <div className="toc-item-time">{item.time}</div>
           </TiltCard>
         ))}
-      </div>
-    </div>
+      </div>    </div>
   </div>
 );
 
@@ -1171,44 +1202,158 @@ const SlideStage = () => (
 );
 
 // ========== SLIDE: JOURNEY ==========
-const SlideJourney = () => (
-  <div className="slide-inner">
-    <div className="journey-content">
-      <div className="journey-eyebrow">Chapter II · The Journey</div>
-      <h2 className="journey-h">From <em>building tools</em> to <em>making them observable</em>.</h2>
-      <div className="journey-track">
-        <TiltCard className="journey-phase p1" max={5}>
-          <div className="journey-phase-num">PHASE 01 · NOV — JAN</div>
-          <div className="journey-phase-tag">SQUAD TOOLS · JIRA DEV-895</div>
-          <h3 className="journey-phase-title">"Upload a file."<br/>Day 1, on a ticket.</h3>
-          <p className="journey-phase-mission">I built the React front-end of CA-GIP's Portail DevOps — exposing the existing <code>jfrogservice</code> backend so non-technical LCL teams could upload <code>.WAR</code>, certificates, and module packages without touching an API.</p>
-          <div className="journey-phase-quote">"Day 30: shipped to production. But while watching how others use it, I notice something strange…"</div>
-          <div className="journey-phase-stack"><span className="stack-pill">React</span><span className="stack-pill">REST</span><span className="stack-pill">Artifactory</span><span className="stack-pill">Kubernetes</span><span className="stack-pill">GitLab CI</span></div>
-        </TiltCard>
-        <div className="journey-arrow">
-          <div className="journey-arrow-line"/>
-          <div className="journey-arrow-label">A hidden door<br/>to a bigger problem</div>
+// ========== SLIDE: JOURNEY (flip-card design) ==========
+const JourneyP1Illustration = () => (
+  <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="p1bg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#5a3a0e"/>
+        <stop offset="50%" stopColor="#8a5712"/>
+        <stop offset="100%" stopColor="#b67414"/>
+      </linearGradient>
+      <pattern id="p1Grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
+      </pattern>
+    </defs>
+    <rect width="600" height="380" fill="url(#p1bg)"/>
+    <rect width="600" height="380" fill="url(#p1Grid)"/>
+    {/* React/UI mock illustration */}
+    <g opacity="0.35" transform="translate(80, 60)">
+      <rect width="440" height="280" rx="14" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
+      <rect x="20" y="20" width="100" height="14" rx="4" fill="rgba(255,255,255,0.4)"/>
+      <rect x="20" y="44" width="180" height="10" rx="3" fill="rgba(255,255,255,0.25)"/>
+      {/* Upload zone */}
+      <rect x="20" y="80" width="400" height="120" rx="10" fill="rgba(255,255,255,0.06)" stroke="rgba(255,213,144,0.5)" strokeWidth="2" strokeDasharray="6 6"/>
+      <g transform="translate(220, 130)">
+        <path d="M 0 -25 L 0 15 M -15 0 L 0 -25 L 15 0" stroke="#ffd590" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="-25" y1="20" x2="25" y2="20" stroke="#ffd590" strokeWidth="3" strokeLinecap="round"/>
+      </g>
+      <text x="220" y="195" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontFamily="JetBrains Mono">DROP FILE HERE</text>
+      {/* button */}
+      <rect x="290" y="220" width="130" height="40" rx="8" fill="#ffd590"/>
+      <text x="355" y="245" textAnchor="middle" fill="#5a3a0e" fontSize="13" fontFamily="JetBrains Mono" fontWeight="700">UPLOAD</text>
+    </g>
+  </svg>
+);
+
+const JourneyP2Illustration = () => (
+  <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="p2bg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#003820"/>
+        <stop offset="50%" stopColor="#005530"/>
+        <stop offset="100%" stopColor="#007a3a"/>
+      </linearGradient>
+      <pattern id="p2Grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
+      </pattern>
+    </defs>
+    <rect width="600" height="380" fill="url(#p2bg)"/>
+    <rect width="600" height="380" fill="url(#p2Grid)"/>
+    {/* Dashboard with alerts */}
+    <g opacity="0.4" transform="translate(60, 60)">
+      <rect width="480" height="280" rx="14" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
+      {/* Header */}
+      <rect x="20" y="20" width="160" height="14" rx="3" fill="rgba(179,240,197,0.7)"/>
+      <text x="20" y="55" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="JetBrains Mono">1,000 INCIDENTS · LAST 30 DAYS</text>
+      {/* Bar chart */}
+      <g transform="translate(20, 80)">
+        <rect x="0" y="120" width="22" height="60" fill="#b3f0c5" opacity="0.4"/>
+        <rect x="32" y="80" width="22" height="100" fill="#b3f0c5" opacity="0.5"/>
+        <rect x="64" y="40" width="22" height="140" fill="#b3f0c5" opacity="0.7"/>
+        <rect x="96" y="20" width="22" height="160" fill="#b3f0c5" opacity="0.9"/>
+        <rect x="128" y="60" width="22" height="120" fill="#b3f0c5" opacity="0.6"/>
+        <rect x="160" y="100" width="22" height="80" fill="#b3f0c5" opacity="0.5"/>
+        <rect x="192" y="50" width="22" height="130" fill="#b3f0c5" opacity="0.7"/>
+        <rect x="224" y="30" width="22" height="150" fill="#b3f0c5" opacity="0.85"/>
+        <rect x="256" y="70" width="22" height="110" fill="#b3f0c5" opacity="0.6"/>
+        <rect x="288" y="90" width="22" height="90" fill="#b3f0c5" opacity="0.5"/>
+        <rect x="320" y="55" width="22" height="125" fill="#b3f0c5" opacity="0.7"/>
+        <rect x="352" y="35" width="22" height="145" fill="#b3f0c5" opacity="0.85"/>
+        <rect x="384" y="75" width="22" height="105" fill="#b3f0c5" opacity="0.6"/>
+        <rect x="416" y="100" width="22" height="80" fill="#b3f0c5" opacity="0.5"/>
+      </g>
+      {/* Alert dot */}
+      <circle cx="135" cy="100" r="6" fill="#ff6b6b">
+        <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </svg>
+);
+
+const SlideJourney = () => {
+  const [flipped1, setFlipped1] = useState(false);
+  const [flipped2, setFlipped2] = useState(false);
+  return (
+    <div className="slide-inner">
+      <div className="journey-content">
+        <div className="journey-eyebrow">Chapter II · The Journey</div>
+        <h2 className="journey-h">From <em>building tools</em> to <em>making them observable</em>.</h2>
+        <div className="journey-flip-grid">
+          <div className={`journey-flip-card p1 ${flipped1 ? 'flipped' : ''}`} onClick={() => setFlipped1(f => !f)}>
+            <div className="journey-flip-side journey-flip-front">
+              <div className="journey-flip-hint">↻ Click</div>
+              <div className="journey-flip-bg"><JourneyP1Illustration/></div>
+              <div className="journey-flip-overlay"/>
+              <div className="journey-flip-content">
+                <div className="journey-flip-num">PHASE 01 · NOV — JAN</div>
+                <h3 className="journey-flip-title">"Upload a file."<br/>Day 1, on a ticket.</h3>
+                <div className="journey-flip-subtitle">Squad Tools · Jira DEV-895</div>
+              </div>
+            </div>
+            <div className="journey-flip-side journey-flip-back">
+              <div className="journey-flip-back-num">PHASE 01 · WHAT I BUILT</div>
+              <h3 className="journey-flip-back-title">React front-end of CA-GIP's Portail DevOps</h3>
+              <p className="journey-flip-back-mission">I exposed the existing <code>jfrogservice</code> backend so non-technical LCL teams could upload <code>.WAR</code>, certificates, and module packages — <strong>without touching an API</strong>.</p>
+              <div className="journey-flip-back-stack">
+                <span className="stack-pill">React</span>
+                <span className="stack-pill">REST</span>
+                <span className="stack-pill">Artifactory</span>
+                <span className="stack-pill">Kubernetes</span>
+                <span className="stack-pill">GitLab CI</span>
+              </div>
+              <div className="journey-flip-back-quote">"Day 30: shipped to production. But while watching how others use it, I notice something strange…"</div>
+            </div>
+          </div>
+          <div className={`journey-flip-card p2 ${flipped2 ? 'flipped' : ''}`} onClick={() => setFlipped2(f => !f)}>
+            <div className="journey-flip-side journey-flip-front">
+              <div className="journey-flip-hint">↻ Click</div>
+              <div className="journey-flip-bg"><JourneyP2Illustration/></div>
+              <div className="journey-flip-overlay"/>
+              <div className="journey-flip-content">
+                <div className="journey-flip-num">PHASE 02 · FEB — MAY</div>
+                <h3 className="journey-flip-title">"Why does nobody know<br/>what failed last month?"</h3>
+                <div className="journey-flip-subtitle">Squad DevOps · AIOps Cockpit</div>
+              </div>
+            </div>
+            <div className="journey-flip-side journey-flip-back">
+              <div className="journey-flip-back-num">PHASE 02 · WHAT I DESIGNED</div>
+              <h3 className="journey-flip-back-title">The full AIOps weak-signal cockpit</h3>
+              <p className="journey-flip-back-mission">I opened Dynatrace for the first time. <strong>1,000 alerts.</strong> Cryptic codes. Data expiring after 30 days. I realized: this isn't a tool problem — it's a <strong>management blindness problem.</strong></p>
+              <div className="journey-flip-back-stack">
+                <span className="stack-pill">Python</span>
+                <span className="stack-pill">Mistral 7B</span>
+                <span className="stack-pill">Ollama</span>
+                <span className="stack-pill">Vault</span>
+                <span className="stack-pill">Power BI</span>
+              </div>
+              <div className="journey-flip-back-quote">"That's the moment the project began."</div>
+            </div>
+          </div>
         </div>
-        <TiltCard className="journey-phase p2" max={5}>
-          <div className="journey-phase-num">PHASE 02 · FEB — MAY</div>
-          <div className="journey-phase-tag">SQUAD DEVOPS · AIOPS COCKPIT</div>
-          <h3 className="journey-phase-title">"Why does nobody know<br/>what failed last month?"</h3>
-          <p className="journey-phase-mission">I opened Dynatrace for the first time. <strong>1,000 alerts.</strong> Cryptic codes. Data expiring after 30 days. I realized: this isn't a tool problem — it's a <strong>management blindness problem.</strong></p>
-          <div className="journey-phase-quote">"That's the moment the project began."</div>
-          <div className="journey-phase-stack"><span className="stack-pill">Python</span><span className="stack-pill">Mistral 7B</span><span className="stack-pill">Ollama</span><span className="stack-pill">Vault</span><span className="stack-pill">Power BI</span></div>
+        <TiltCard className="agile-banner" max={4}>
+          <div className="agile-icon"><LogoScrum size={28}/></div>
+          <div>
+            <div className="agile-text-label">⚡ How software is actually delivered</div>
+            <div className="agile-text">Both phases unfolded inside CA-GIP's <strong>Agile/Scrum framework</strong> — two-week sprints, daily stand-ups, sprint reviews, retrospectives, and quarterly cross-squad <strong>PI Planning</strong>. Engineering rituals are not bureaucracy: they are <strong>the mechanisms that make a team coherent.</strong></div>
+          </div>
+          <div className="agile-rituals"><span className="agile-ritual">Sprint Planning</span><span className="agile-ritual">Daily Stand-up</span><span className="agile-ritual">Sprint Review</span><span className="agile-ritual">Retro</span><span className="agile-ritual">PI Planning</span></div>
         </TiltCard>
       </div>
-      <TiltCard className="agile-banner" max={4}>
-        <div className="agile-icon"><LogoScrum size={28}/></div>
-        <div>
-          <div className="agile-text-label">⚡ How software is actually delivered</div>
-          <div className="agile-text">Both phases unfolded inside CA-GIP's <strong>Agile/Scrum framework</strong> — two-week sprints, daily stand-ups, sprint reviews, retrospectives, and quarterly cross-squad <strong>PI Planning</strong>. Engineering rituals are not bureaucracy: they are <strong>the mechanisms that make a team coherent.</strong></div>
-        </div>
-        <div className="agile-rituals"><span className="agile-ritual">Sprint Planning</span><span className="agile-ritual">Daily Stand-up</span><span className="agile-ritual">Sprint Review</span><span className="agile-ritual">Retro</span><span className="agile-ritual">PI Planning</span></div>
-      </TiltCard>
     </div>
-  </div>
-);
+  );
+};
 
 // ========== SLIDE: PROBLEM ==========
 const SlideProblem = () => (
@@ -1621,22 +1766,22 @@ const SlideQA = () => (
 
 // ========== APP ==========
 const SLIDES = [
-  { id: 'cold',       cls: 'slide-cold',       comp: SlideCold,       label: 'Cold Open',         chapter: 'Hook',         time: '90s',  dark: true  },
-  { id: 'title',      cls: 'slide-title',      comp: SlideTitle,      label: 'Title',             chapter: 'Identity',     time: '30s',  dark: false },
-  { id: 'toc',        cls: 'slide-toc',        comp: SlideTOC,        label: 'Table of Contents', chapter: 'Roadmap',      time: '20s',  dark: false },
-  { id: 'problematique', cls: 'slide-problematique', comp: SlideProblematique, label: 'Research Question', chapter: 'Question',  time: '40s',  dark: true  },
-  { id: 'stage',      cls: 'slide-stage',      comp: SlideStage,      label: 'The Stage',         chapter: 'Chapter I',    time: '90s',  dark: false },
-  { id: 'journey',    cls: 'slide-journey',    comp: SlideJourney,    label: 'Journey + Agile',   chapter: 'Chapter II',   time: '110s', dark: false },
-  { id: 'problem',    cls: 'slide-problem',    comp: SlideProblem,    label: 'The Problem',       chapter: 'Chapter III',  time: '60s',  dark: true  },
-  { id: 'metaphor',   cls: 'slide-metaphor',   comp: SlideMetaphor,   label: 'Pipeline + ROI',    chapter: 'Chapter IV',   time: '120s', dark: false },
-  { id: 'discovery',  cls: 'slide-discovery',  comp: SlideDiscovery,  label: 'The Finding',       chapter: 'Chapter V',    time: '80s',  dark: false },
-  { id: 'comparison', cls: 'slide-comparison', comp: SlideComparison, label: 'Before / After',    chapter: 'Bridge',       time: '60s',  dark: false },
-  { id: 'cockpit',    cls: 'slide-cockpit',    comp: SlideCockpit,    label: 'The Cockpit',       chapter: 'Chapter VI',   time: '110s', dark: false },
-  { id: 'roadmap',    cls: 'slide-roadmap',    comp: SlideRoadmap,    label: 'Roadmap',           chapter: 'Chapter VII',  time: '60s',  dark: false },
-  { id: 'skills',     cls: 'slide-skills',     comp: SlideSkills,     label: 'Skills Acquired',   chapter: 'Chapter IX',   time: '60s',  dark: false },
-  { id: 'callback',   cls: 'slide-callback',   comp: SlideCallback,   label: 'Callback',          chapter: 'Chapter VIII', time: '30s',  dark: true  },
-  { id: 'final',      cls: 'slide-final',      comp: SlideFinal,      label: 'Closing',           chapter: 'Closing',      time: '25s',  dark: true  },
-  { id: 'qa',         cls: 'slide-qa',         comp: SlideQA,         label: 'Q&A',               chapter: 'Q&A',          time: '—',    dark: false }
+  { id: 'cold',       cls: 'slide-cold',       comp: SlideCold,       label: 'Cold Open',         chapter: 'Hook',         time: '1:50', dark: true  },
+  { id: 'title',      cls: 'slide-title',      comp: SlideTitle,      label: 'Title',             chapter: 'Identity',     time: '0:30', dark: false },
+  { id: 'toc',        cls: 'slide-toc',        comp: SlideTOC,        label: 'Table of Contents', chapter: 'Roadmap',      time: '0:25', dark: false },
+  { id: 'problematique', cls: 'slide-problematique', comp: SlideProblematique, label: 'Research Question', chapter: 'Question',  time: '0:50', dark: true  },
+  { id: 'stage',      cls: 'slide-stage',      comp: SlideStage,      label: 'The Stage',         chapter: 'Chapter I',    time: '1:50', dark: false },
+  { id: 'journey',    cls: 'slide-journey',    comp: SlideJourney,    label: 'Journey + Agile',   chapter: 'Chapter II',   time: '2:10', dark: false },
+  { id: 'problem',    cls: 'slide-problem',    comp: SlideProblem,    label: 'The Problem',       chapter: 'Chapter III',  time: '1:20', dark: true  },
+  { id: 'metaphor',   cls: 'slide-metaphor',   comp: SlideMetaphor,   label: 'Pipeline + ROI',    chapter: 'Chapter IV',   time: '2:30', dark: false },
+  { id: 'discovery',  cls: 'slide-discovery',  comp: SlideDiscovery,  label: 'The Finding',       chapter: 'Chapter V',    time: '1:40', dark: false },
+  { id: 'comparison', cls: 'slide-comparison', comp: SlideComparison, label: 'Before / After',    chapter: 'Bridge',       time: '1:10', dark: false },
+  { id: 'cockpit',    cls: 'slide-cockpit',    comp: SlideCockpit,    label: 'The Cockpit',       chapter: 'Chapter VI',   time: '2:20', dark: false },
+  { id: 'roadmap',    cls: 'slide-roadmap',    comp: SlideRoadmap,    label: 'Roadmap',           chapter: 'Chapter VII',  time: '1:25', dark: false },
+  { id: 'skills',     cls: 'slide-skills',     comp: SlideSkills,     label: 'Skills Acquired',   chapter: 'Chapter IX',   time: '1:30', dark: false },
+  { id: 'callback',   cls: 'slide-callback',   comp: SlideCallback,   label: 'Callback',          chapter: 'Chapter VIII', time: '0:40', dark: true  },
+  { id: 'final',      cls: 'slide-final',      comp: SlideFinal,      label: 'Closing',           chapter: 'Closing',      time: '0:35', dark: true  },
+  { id: 'qa',         cls: 'slide-qa',         comp: SlideQA,         label: 'Q&A',               chapter: 'Q&A',          time: 'open', dark: false }
 ];
 
 const App = () => {
