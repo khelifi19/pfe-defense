@@ -439,13 +439,125 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .toc-h { font-family: var(--font-serif); font-weight: 700; font-size: clamp(36px,4.5vw,60px); text-align: center; margin-bottom: 12px; line-height: 1.1; color: var(--navy); letter-spacing: -0.02em; }
 .toc-h em { color: var(--green); font-style: italic; }
 .toc-sub { text-align: center; font-size: 16px; color: var(--ink-soft); margin-bottom: 50px; font-style: italic; }
-.toc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.toc-item { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px 20px; cursor: none; transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s; text-align: left; display: flex; flex-direction: column; gap: 12px; min-height: 170px; }
-.toc-item:hover { box-shadow: var(--shadow-xl); border-color: var(--green); transform: translateY(-4px); }
-.toc-item-num { font-family: var(--font-serif); font-weight: 900; font-size: 36px; line-height: 1; background: linear-gradient(135deg, var(--green), var(--green-deep)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.toc-item-chapter { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--ink-muted); text-transform: uppercase; font-weight: 600; }
-.toc-item-title { font-family: var(--font-serif); font-weight: 700; font-size: 17px; color: var(--navy); line-height: 1.25; margin-top: auto; }
-.toc-item-time { font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); letter-spacing: 0.15em; margin-top: 4px; }
+/* ========== TOC NEW CREATIVE DESIGN ========== */
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.toc-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0;
+  cursor: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 88px;
+}
+/* Color stripe on the left of each card */
+.toc-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--green);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toc-item:nth-child(1)::before { background: linear-gradient(180deg, var(--navy), var(--navy-soft)); }
+.toc-item:nth-child(2)::before { background: linear-gradient(180deg, var(--green-soft), var(--green)); }
+.toc-item:nth-child(3)::before { background: linear-gradient(180deg, var(--amber), #f4b04d); }
+.toc-item:nth-child(4)::before { background: linear-gradient(180deg, var(--violet), #8a6cd9); }
+.toc-item:nth-child(5)::before { background: linear-gradient(180deg, var(--crimson), #e07060); }
+.toc-item:nth-child(6)::before { background: linear-gradient(180deg, #00bcd4, #4fd1e1); }
+.toc-item:nth-child(7)::before { background: linear-gradient(180deg, #00897b, #34a89b); }
+.toc-item:nth-child(8)::before { background: linear-gradient(180deg, var(--navy), var(--green)); }
+.toc-item:nth-child(9)::before { background: linear-gradient(180deg, var(--violet), var(--amber)); }
+
+/* Hover: stripe extends to fill background with color */
+.toc-item:hover::before { width: 100%; opacity: 0.12; }
+.toc-item:hover { transform: translateY(-3px) translateX(2px); box-shadow: 0 12px 32px rgba(0,42,84,0.15); border-color: transparent; }
+
+/* Number column on the left */
+.toc-item-num {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  font-size: 44px;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  padding: 0 12px 0 24px;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s;
+  letter-spacing: -0.04em;
+}
+.toc-item:hover .toc-item-num { transform: scale(1.15); }
+.toc-item:nth-child(1):hover .toc-item-num { background: linear-gradient(135deg, var(--navy), var(--navy-soft)); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(2):hover .toc-item-num { background: linear-gradient(135deg, var(--green-soft), var(--green-deep)); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(3):hover .toc-item-num { background: linear-gradient(135deg, var(--amber), #c47a14); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(4):hover .toc-item-num { background: linear-gradient(135deg, var(--violet), #8a6cd9); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(5):hover .toc-item-num { background: linear-gradient(135deg, var(--crimson), #a02816); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(6):hover .toc-item-num { background: linear-gradient(135deg, #00bcd4, #007a90); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(7):hover .toc-item-num { background: linear-gradient(135deg, #00897b, #005a4f); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(8):hover .toc-item-num { background: linear-gradient(135deg, var(--navy), var(--green)); -webkit-background-clip: text; background-clip: text; }
+.toc-item:nth-child(9):hover .toc-item-num { background: linear-gradient(135deg, var(--violet), var(--amber)); -webkit-background-clip: text; background-clip: text; }
+
+/* Body in the middle */
+.toc-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 12px;
+  position: relative;
+  z-index: 2;
+}
+.toc-item-chapter {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.toc-item-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.toc-item-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  padding: 0 24px 0 12px;
+  position: relative;
+  z-index: 2;
+  background: rgba(0,42,84,0.05);
+  border-radius: 100px;
+  padding: 4px 10px;
+  margin-right: 24px;
+  display: inline-block;
+}
+.toc-item:hover .toc-item-time {
+  background: rgba(255,255,255,0.85);
+  color: var(--navy);
+}
 
 /* ========== SLIDE: PROBLEMATIQUE ========== */
 .slide-problematique { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-soft) 100%); color: #fff; position: relative; overflow: hidden; }
@@ -646,8 +758,8 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 /* ========== SLIDE: COMPARISON ========== */
 .slide-comparison { background: #fff; }
 .slide-comparison .slide-inner { padding: 0; }
-.comparison-content { width: 100%; height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
-.comp-side { padding: 100px 60px 60px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: auto; }
+.comparison-content { width: 100%; height: 100vh; display: flex; position: relative; align-items: stretch; }
+.comp-side { flex: 1; padding: 100px 60px 60px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: auto; }
 .comp-side.before { background: linear-gradient(135deg, #fff5f4 0%, #ffe8e5 100%); }
 .comp-side.after { background: linear-gradient(135deg, #f0faf3 0%, #d4f1e0 100%); }
 .comp-label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; }
@@ -662,7 +774,39 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .comp-side.after .comp-icon { color: var(--green); }
 .comp-item strong { color: var(--navy); font-weight: 600; }
 .comp-item code { font-family: var(--font-mono); font-size: 13px; background: rgba(0,42,84,0.06); padding: 2px 8px; border-radius: 3px; color: var(--navy); }
-.comp-vs { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 80px; height: 80px; background: var(--navy); border: 4px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: 24px; color: #fff; z-index: 6; box-shadow: 0 0 0 6px rgba(0,42,84,0.1), 0 30px 60px rgba(0,42,84,0.3); animation: vsRotate 8s ease-in-out infinite; }
+/* VS as a flex sibling between the two halves - GUARANTEED centered */
+.comp-vs-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  pointer-events: none;
+}
+.comp-vs {
+  width: 90px;
+  height: 90px;
+  background: var(--navy);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 28px;
+  color: #fff;
+  box-shadow: 0 0 0 6px rgba(0,42,84,0.1), 0 30px 60px rgba(0,42,84,0.3);
+  animation: vsRotate 8s ease-in-out infinite;
+  letter-spacing: 0;
+  line-height: 1;
+}
 
 /* ========== SLIDE: COCKPIT ========== */
 .slide-cockpit { background: var(--bg); }
@@ -1073,14 +1217,17 @@ const SlideTOC = () => (
       <p className="toc-sub">Nine chapters · one customer · one cockpit · one engineer.</p>
       <div className="toc-grid">
         {TOC_ITEMS.map((item, i) => (
-          <TiltCard key={i} className="toc-item" max={6}>
+          <div key={i} className="toc-item">
             <div className="toc-item-num">{item.num}</div>
-            <div className="toc-item-chapter">{item.chapter}</div>
-            <div className="toc-item-title">{item.title}</div>
+            <div className="toc-item-body">
+              <div className="toc-item-chapter">{item.chapter}</div>
+              <div className="toc-item-title">{item.title}</div>
+            </div>
             <div className="toc-item-time">{item.time}</div>
-          </TiltCard>
+          </div>
         ))}
-      </div>    </div>
+      </div>
+    </div>
   </div>
 );
 
@@ -1461,7 +1608,7 @@ const SlideComparison = () => (
           <li className="comp-item"><span className="comp-icon">✕</span><span>Zero structural insight over time</span></li>
         </ul>
       </div>
-      <div className="comp-vs">vs</div>
+      <div className="comp-vs-wrapper"><div className="comp-vs">vs</div></div>
       <div className="comp-side after">
         <div className="comp-label">✓ After · AIOps Cockpit</div>
         <h3 className="comp-h">What they see now.</h3>
@@ -1838,7 +1985,7 @@ const App = () => {
         <div className="counter-num">{String(idx + 1).padStart(2, '0')}</div>
         <div className="counter-divider"/>
         <div className="counter-info">
-          <div className="counter-of"><strong>SLIDE</strong> · OF {String(total).padStart(2, '0')}</div>
+          <div className="counter-of">{String(idx + 1).padStart(2, '0')} <strong>OF</strong> {String(total).padStart(2, '0')}</div>
           <div className="counter-chapter">{cur.chapter}</div>
         </div>
       </div>
