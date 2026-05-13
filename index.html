@@ -391,11 +391,69 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .cold-content { text-align: center; position: relative; z-index: 2; }
 .cold-time { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.4em; color: var(--green-soft); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards; }
 .cold-counter { font-family: var(--font-serif); font-weight: 900; font-size: clamp(80px, 18vw, 280px); line-height: 0.9; color: #fff; letter-spacing: -0.04em; opacity: 0; animation: counterIn 1s cubic-bezier(0.34,1.56,0.64,1) 0.6s forwards; text-shadow: 0 0 80px rgba(0,165,80,0.4); }
+.cold-scene {
+  position: absolute;
+  top: -100px;
+  right: -40px;
+  width: 280px;
+  height: 210px;
+  z-index: 1;
+  opacity: 0;
+  animation: sceneAppear 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 40px rgba(0,165,80,0.3));
+}
+.cold-scene::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 2px solid rgba(0,165,80,0.4);
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 3;
+  animation: sceneBorderPulse 3s ease-in-out infinite;
+}
+.cold-scene::after {
+  content: '◉ LIVE · 09:47';
+  position: absolute;
+  top: -28px;
+  left: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(0,165,80,0.85);
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 3;
+}
+.metro-scene-svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: block;
+  background: #0a1424;
+}
+@keyframes sceneAppear {
+  from { opacity: 0; transform: translateX(40px) scale(0.9); }
+  to { opacity: 0.92; transform: translateX(0) scale(1); }
+}
+@keyframes sceneBorderPulse {
+  0%, 100% { border-color: rgba(0,165,80,0.3); box-shadow: 0 0 0 0 rgba(0,165,80,0.4); }
+  50% { border-color: rgba(0,165,80,0.6); box-shadow: 0 0 0 8px rgba(0,165,80,0); }
+}
 .cold-question { font-family: var(--font-serif); font-style: italic; font-size: clamp(20px,2.5vw,30px); color: rgba(255,255,255,0.85); margin-top: 40px; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.5; opacity: 0; animation: fadeUp 1s ease 1.8s forwards; }
 .cold-question strong { color: var(--amber-glow); font-style: normal; }
 .cold-sub { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.3em; color: rgba(255,255,255,0.5); margin-top: 60px; opacity: 0; animation: fadeUp 1s ease 2.6s forwards; text-transform: uppercase; }
 .alert-grid { position: absolute; inset: 0; pointer-events: none; opacity: 0.3; }
 .alert-dot { position: absolute; width: 4px; height: 4px; background: var(--crimson); border-radius: 50%; animation: blink var(--blink-dur,2s) ease-in-out infinite; animation-delay: var(--blink-delay,0s); box-shadow: 0 0 8px var(--crimson); }
+
+/* Hide metro scene on small screens */
+@media (max-width: 1100px) {
+  .cold-scene { display: none; }
+}
 
 /* ========== SLIDE: TITLE ========== */
 .slide-title { background: var(--bg); }
@@ -874,19 +932,23 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
 .comp-browser-screen {
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 220px;
   overflow: hidden;
-  background: #1a1a1a;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .comp-browser-screen img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
+  object-position: center;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
 }
-.comp-browser:hover .comp-browser-screen img { transform: scale(1.05); }
+.comp-browser:hover .comp-browser-screen img { transform: scale(1.02); }
 
 .comp-browser-overlay {
   position: absolute;
@@ -1535,12 +1597,172 @@ const AlertGrid = () => {
 };
 
 // ========== SLIDE: COLD ==========
+const MetroScene = () => (
+  <svg className="metro-scene-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <linearGradient id="metroWindow" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#0a1929" stopOpacity="0"/>
+        <stop offset="50%" stopColor="#2d4a6b" stopOpacity="0.6"/>
+        <stop offset="100%" stopColor="#0a1929" stopOpacity="0"/>
+      </linearGradient>
+      <linearGradient id="phoneScreen" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#003820"/>
+        <stop offset="100%" stopColor="#005a30"/>
+      </linearGradient>
+      <radialGradient id="phoneGlow">
+        <stop offset="0%" stopColor="rgba(0,165,80,0.4)"/>
+        <stop offset="100%" stopColor="rgba(0,165,80,0)"/>
+      </radialGradient>
+      <linearGradient id="metroFloor" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#1a2840"/>
+        <stop offset="100%" stopColor="#0a1424"/>
+      </linearGradient>
+      <clipPath id="windowClip"><rect x="40" y="30" width="320" height="100" rx="6"/></clipPath>
+    </defs>
+
+    {/* Metro car interior background */}
+    <rect width="400" height="300" fill="#0a1424"/>
+    
+    {/* Metro window with passing scenery */}
+    <rect x="40" y="30" width="320" height="100" rx="6" fill="#0a1929" stroke="rgba(255,255,255,0.08)" strokeWidth="1"/>
+    <g clipPath="url(#windowClip)">
+      {/* Passing tunnel lights effect */}
+      <rect x="40" y="30" width="320" height="100" fill="url(#metroWindow)">
+        <animate attributeName="x" values="-280;360" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="40" y="30" width="320" height="100" fill="url(#metroWindow)" opacity="0.5">
+        <animate attributeName="x" values="-280;360" dur="2.3s" begin="0.7s" repeatCount="indefinite"/>
+      </rect>
+      {/* Distant city lights */}
+      <circle cx="80" cy="70" r="1.5" fill="#ffdb70" opacity="0.6">
+        <animate attributeName="cx" values="450;-50" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="160" cy="90" r="1" fill="#ffdb70" opacity="0.5">
+        <animate attributeName="cx" values="500;-50" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="240" cy="60" r="2" fill="#ffdb70" opacity="0.7">
+        <animate attributeName="cx" values="480;-50" dur="3.8s" begin="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="100" r="1.5" fill="#ffdb70" opacity="0.5">
+        <animate attributeName="cx" values="460;-50" dur="4.2s" begin="1.8s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    
+    {/* Window reflection */}
+    <rect x="40" y="30" width="320" height="100" rx="6" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"/>
+
+    {/* Metro interior decoration - hanging strap */}
+    <line x1="120" y1="0" x2="120" y2="40" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5"/>
+    <circle cx="120" cy="42" r="3" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
+    <line x1="280" y1="0" x2="280" y2="40" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5"/>
+    <circle cx="280" cy="42" r="3" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
+
+    {/* Floor / seat */}
+    <rect x="0" y="220" width="400" height="80" fill="url(#metroFloor)"/>
+    <line x1="0" y1="220" x2="400" y2="220" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
+    
+    {/* Seat back behind woman */}
+    <rect x="20" y="150" width="360" height="80" rx="4" fill="#1d2f4a" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
+
+    {/* Silhouette of woman holding phone */}
+    <g transform="translate(200, 145)">
+      {/* Body silhouette */}
+      <path d="M -45 75 Q -45 30 -25 25 L -10 22 Q 0 18 10 22 L 25 25 Q 45 30 45 75 L 45 100 L -45 100 Z" fill="#101a2e" opacity="0.95"/>
+      {/* Coat collar */}
+      <path d="M -25 25 L -15 40 L 0 38 L 15 40 L 25 25 L 25 35 L 15 50 L 0 50 L -15 50 L -25 35 Z" fill="#0a1424"/>
+      {/* Head */}
+      <ellipse cx="0" cy="0" rx="18" ry="22" fill="#101a2e"/>
+      {/* Hair */}
+      <path d="M -18 -8 Q -22 -22 -10 -22 Q 0 -25 10 -22 Q 22 -22 18 -8 Q 18 12 14 16 L -14 16 Q -18 12 -18 -8 Z" fill="#0a0e1a"/>
+      {/* Face hint (subtle) */}
+      <circle cx="-7" cy="2" r="1.2" fill="rgba(255,255,255,0.3)"/>
+      <circle cx="7" cy="2" r="1.2" fill="rgba(255,255,255,0.3)"/>
+      
+      {/* Arm holding phone */}
+      <path d="M -10 50 Q -15 60 -8 75 L 8 75 Q 15 60 10 50 Z" fill="#0a1424"/>
+      
+      {/* Phone glow halo */}
+      <circle cx="0" cy="80" r="35" fill="url(#phoneGlow)">
+        <animate attributeName="r" values="30;38;30" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+      
+      {/* Phone */}
+      <g transform="translate(-22, 60)">
+        {/* Phone body */}
+        <rect width="44" height="78" rx="6" fill="#1a1a1a" stroke="#2a2a2a" strokeWidth="1"/>
+        {/* Phone screen */}
+        <rect x="2" y="3" width="40" height="72" rx="4" fill="url(#phoneScreen)"/>
+        
+        {/* Screen content - status bar */}
+        <rect x="4" y="6" width="36" height="6" fill="rgba(255,255,255,0.1)" rx="1"/>
+        <text x="6" y="11" fontSize="3" fill="rgba(255,255,255,0.7)" fontFamily="monospace">09:47</text>
+        
+        {/* LCL logo area */}
+        <rect x="6" y="16" width="32" height="14" rx="2" fill="rgba(0,165,80,0.15)" stroke="rgba(0,165,80,0.4)" strokeWidth="0.5"/>
+        <text x="22" y="25" textAnchor="middle" fontSize="6" fill="#fff" fontFamily="Inter, sans-serif" fontWeight="700">LCL</text>
+        
+        {/* Account balance bar */}
+        <rect x="6" y="34" width="32" height="3" rx="1" fill="rgba(255,255,255,0.15)"/>
+        <text x="6" y="42" fontSize="2.5" fill="rgba(255,255,255,0.6)" fontFamily="monospace">SOLDE</text>
+        <text x="38" y="42" textAnchor="end" fontSize="3.5" fill="#fff" fontFamily="monospace" fontWeight="600">2,847 €</text>
+        
+        {/* Action button */}
+        <rect x="6" y="48" width="32" height="9" rx="2" fill="#00A550" opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <text x="22" y="54" textAnchor="middle" fontSize="3.5" fill="#fff" fontFamily="Inter, sans-serif" fontWeight="700" opacity="0">
+          PAY RENT
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="6s" repeatCount="indefinite"/>
+        </text>
+        
+        {/* Loading dots after click */}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;1;1;0" dur="6s" repeatCount="indefinite"/>
+          <circle cx="16" cy="52" r="1.5" fill="#fff"><animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite"/></circle>
+          <circle cx="22" cy="52" r="1.5" fill="#fff"><animate attributeName="opacity" values="0.3;1;0.3" dur="1s" begin="0.2s" repeatCount="indefinite"/></circle>
+          <circle cx="28" cy="52" r="1.5" fill="#fff"><animate attributeName="opacity" values="0.3;1;0.3" dur="1s" begin="0.4s" repeatCount="indefinite"/></circle>
+        </g>
+        
+        {/* Error / Alert state */}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0;0;1;1" dur="6s" repeatCount="indefinite"/>
+          <rect x="6" y="48" width="32" height="20" rx="2" fill="rgba(192,57,43,0.2)" stroke="#c0392b" strokeWidth="0.5"/>
+          <text x="22" y="55" textAnchor="middle" fontSize="3" fill="#ff6b6b" fontFamily="Inter, sans-serif" fontWeight="700">⚠ ERROR</text>
+          <text x="22" y="62" textAnchor="middle" fontSize="2.5" fill="rgba(255,255,255,0.8)" fontFamily="monospace">TRY AGAIN</text>
+        </g>
+        
+        {/* Bottom info */}
+        <rect x="6" y="60" width="32" height="3" rx="1" fill="rgba(255,255,255,0.08)">
+          <animate attributeName="opacity" values="1;1;0;0;0;0" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="6" y="65" width="20" height="3" rx="1" fill="rgba(255,255,255,0.08)">
+          <animate attributeName="opacity" values="1;1;0;0;0;0" dur="6s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+    </g>
+
+    {/* "Meanwhile..." cryptic alert indicator in corner */}
+    <g transform="translate(340, 250)" opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0;0.8;0" dur="6s" repeatCount="indefinite"/>
+      <circle cx="0" cy="0" r="14" fill="rgba(192,57,43,0.2)" stroke="#c0392b" strokeWidth="1.5"/>
+      <text x="0" y="3" textAnchor="middle" fontSize="10" fill="#ff6b6b" fontFamily="Inter, sans-serif" fontWeight="900">!</text>
+      <text x="0" y="22" textAnchor="middle" fontSize="5" fill="#ff6b6b" fontFamily="monospace" fontWeight="700">P-260513624</text>
+    </g>
+    
+    {/* Subtle "200m away" indicator */}
+    <text x="200" y="285" textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.25)" fontFamily="monospace" letterSpacing="0.3em">
+      200M AWAY · CA-GIP DATA CENTER
+    </text>
+  </svg>
+);
+
 const SlideCold = ({ active }) => (
   <div className="slide-inner">
     <AlertGrid/>
     <div className="cold-content">
       <div className="cold-time">TUESDAY · 09:47 · LCL · PARIS</div>
       <div className="cold-counter"><AnimatedCounter target={88343} active={active}/></div>
+      <div className="cold-scene"><MetroScene/></div>
       <div className="cold-question">"An LCL customer opens her app to make an urgent transfer.<br/>Two hundred meters away, <strong>1,000 alerts just lit up.</strong><br/>Nobody knows which one is hers."</div>
       <div className="cold-sub">— here's how I helped answer that question.</div>
     </div>
