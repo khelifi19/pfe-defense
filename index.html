@@ -808,6 +808,253 @@ html, body { font-family: var(--font-sans); background: var(--bg); color: var(--
   line-height: 1;
 }
 
+/* Browser-window-style image frames */
+.comp-browser {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 24px rgba(0,42,84,0.12);
+}
+.comp-browser:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 50px rgba(0,42,84,0.25);
+}
+.comp-side.before .comp-browser { border-top: 3px solid var(--crimson); }
+.comp-side.after .comp-browser { border-top: 3px solid var(--green); }
+.comp-side.before .comp-browser:hover { box-shadow: 0 20px 50px rgba(192,57,43,0.3); }
+.comp-side.after .comp-browser:hover { box-shadow: 0 20px 50px rgba(0,165,80,0.3); }
+
+/* Browser top bar (macOS-style) */
+.comp-browser-bar {
+  height: 36px;
+  background: linear-gradient(180deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-bottom: 1px solid #d1d5db;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+}
+.comp-browser-dots { display: flex; gap: 6px; }
+.comp-browser-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+}
+.comp-browser-dots .dot.red { background: #ff5f57; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.1); }
+.comp-browser-dots .dot.yellow { background: #ffbd2e; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.1); }
+.comp-browser-dots .dot.green { background: #28c941; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.1); }
+.comp-browser-url {
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d1d5db;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.comp-browser-lock { font-size: 10px; opacity: 0.7; }
+.comp-browser-spacer { width: 50px; }
+
+/* Browser content area */
+.comp-browser-screen {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+.comp-browser-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.comp-browser:hover .comp-browser-screen img { transform: scale(1.05); }
+
+.comp-browser-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,42,84,0) 50%, rgba(0,42,84,0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 18px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.comp-browser:hover .comp-browser-overlay { opacity: 1; }
+
+.comp-browser-zoom {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: rgba(255,255,255,0.18);
+  padding: 10px 18px;
+  border-radius: 100px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.comp-browser-zoom svg { flex-shrink: 0; }
+
+.comp-image-caption {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+/* Lightbox modal */
+.lightbox-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,22,38,0.95);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: lightboxFadeIn 0.3s ease-out;
+}
+@keyframes lightboxFadeIn {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(8px); }
+}
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,42,84,0.5);
+  animation: lightboxScaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+}
+@keyframes lightboxScaleIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.lightbox-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 100px;
+  z-index: 10;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.lightbox-tag.before { background: var(--crimson); }
+.lightbox-tag.after { background: var(--green); }
+.lightbox-content img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+  background: #f4f7f6;
+}
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: rgba(0,42,84,0.85);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s;
+  font-weight: bold;
+}
+.lightbox-close:hover { background: var(--crimson); transform: scale(1.1) rotate(90deg); }
+.lightbox-caption {
+  padding: 18px 28px;
+  background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lightbox-caption strong {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--navy);
+  font-weight: 700;
+}
+.lightbox-caption span {
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+.lightbox-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.lightbox-hint kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
 /* ========== SLIDE: COCKPIT ========== */
 .slide-cockpit { background: var(--bg); }
 .cockpit-content { width: 100%; max-width: 1400px; }
@@ -1740,37 +1987,115 @@ const SlideDiscovery = () => (
 );
 
 // ========== SLIDE: COMPARISON ==========
-const SlideComparison = () => (
-  <div className="slide-inner">
-    <div className="comparison-content">
-      <div className="comp-side before">
-        <div className="comp-label">⚠ Before · Raw Dynatrace</div>
-        <h3 className="comp-h">What managers used to see.</h3>
-        <ul className="comp-list">
-          <li className="comp-item"><span className="comp-icon">✕</span><span>Data expires after <strong>30 days</strong></span></li>
-          <li className="comp-item"><span className="comp-icon">✕</span><span>Cryptic IDs: <code>[KUB_NS:lcl-api-prod]</code></span></li>
-          <li className="comp-item"><span className="comp-icon">✕</span><span>88,343 alerts treated as <strong>equal signals</strong></span></li>
-          <li className="comp-item"><span className="comp-icon">✕</span><span>No risk score · no prioritization</span></li>
-          <li className="comp-item"><span className="comp-icon">✕</span><span>Built for engineers · not managers</span></li>
-          <li className="comp-item"><span className="comp-icon">✕</span><span>Zero structural insight over time</span></li>
-        </ul>
+const SlideComparison = () => {
+  const [lightbox, setLightbox] = useState(null);
+  
+  useEffect(() => {
+    if (!lightbox) return;
+    const handleEsc = (e) => { if (e.key === 'Escape') setLightbox(null); };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [lightbox]);
+  
+  return (
+    <div className="slide-inner">
+      <div className="comparison-content">
+        {/* BEFORE */}
+        <div className="comp-side before">
+          <div className="comp-label">⚠ Before · Raw Dynatrace</div>
+          <h3 className="comp-h">What managers used to see.</h3>
+          
+          <div className="comp-browser before-img" onClick={() => setLightbox('before')}>
+            <div className="comp-browser-bar">
+              <div className="comp-browser-dots">
+                <span className="dot red"/><span className="dot yellow"/><span className="dot green"/>
+              </div>
+              <div className="comp-browser-url">
+                <span className="comp-browser-lock">🔒</span>
+                apm-mutu-prod1.cagip.group.gca/e/LCL/ui/problems
+              </div>
+              <div className="comp-browser-spacer"/>
+            </div>
+            <div className="comp-browser-screen">
+              <img src="assets/dynatrace-before.png" alt="Dynatrace Problems List — 163 alerts, Tuesday 09:30 peak visible"/>
+              <div className="comp-browser-overlay">
+                <div className="comp-browser-zoom">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                  Click to enlarge
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="comp-image-caption">📸 Real screenshot · LCL production · 13 May 2026</div>
+          
+          <ul className="comp-list">
+            <li className="comp-item"><span className="comp-icon">✕</span><span>Data expires after <strong>30 days</strong></span></li>
+            <li className="comp-item"><span className="comp-icon">✕</span><span>Cryptic IDs: <code>[KUB_NS:lcl-api-prod]</code></span></li>
+            <li className="comp-item"><span className="comp-icon">✕</span><span>88,343 alerts treated as <strong>equal signals</strong></span></li>
+            <li className="comp-item"><span className="comp-icon">✕</span><span>No risk score · no prioritization</span></li>
+          </ul>
+        </div>
+
+        {/* VS BADGE */}
+        <div className="comp-vs-wrapper"><div className="comp-vs">vs</div></div>
+
+        {/* AFTER */}
+        <div className="comp-side after">
+          <div className="comp-label">✓ After · AIOps Cockpit</div>
+          <h3 className="comp-h">What they see now.</h3>
+          
+          <div className="comp-browser after-img" onClick={() => setLightbox('after')}>
+            <div className="comp-browser-bar">
+              <div className="comp-browser-dots">
+                <span className="dot red"/><span className="dot yellow"/><span className="dot green"/>
+              </div>
+              <div className="comp-browser-url">
+                <span className="comp-browser-lock">🔒</span>
+                AIOps Cockpit · Power BI · Global overview
+              </div>
+              <div className="comp-browser-spacer"/>
+            </div>
+            <div className="comp-browser-screen">
+              <img src="assets/cockpit-1.png" alt="AIOps Cockpit — 88,343 incidents over 90 days, ranked and scored"/>
+              <div className="comp-browser-overlay">
+                <div className="comp-browser-zoom">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                  Click to enlarge
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="comp-image-caption">📸 My cockpit · 88,343 incidents · 90 days</div>
+          
+          <ul className="comp-list">
+            <li className="comp-item"><span className="comp-icon">→</span><span><strong>90-day rolling window</strong> · auditable</span></li>
+            <li className="comp-item"><span className="comp-icon">→</span><span>Business labels: <code>API Gateway</code>, <code>CRM</code></span></li>
+            <li className="comp-item"><span className="comp-icon">→</span><span>Top-10 ranked by <strong>Mistral 7B</strong> risk score</span></li>
+            <li className="comp-item"><span className="comp-icon">→</span><span>1–10 severity + LLM root-cause hypothesis</span></li>
+          </ul>
+        </div>
       </div>
-      <div className="comp-vs-wrapper"><div className="comp-vs">vs</div></div>
-      <div className="comp-side after">
-        <div className="comp-label">✓ After · AIOps Cockpit</div>
-        <h3 className="comp-h">What they see now.</h3>
-        <ul className="comp-list">
-          <li className="comp-item"><span className="comp-icon">→</span><span><strong>90-day rolling window</strong> · auditable</span></li>
-          <li className="comp-item"><span className="comp-icon">→</span><span>Business labels: <code>API Gateway</code>, <code>CRM</code></span></li>
-          <li className="comp-item"><span className="comp-icon">→</span><span>Top-10 ranked by <strong>Mistral 7B</strong> risk score</span></li>
-          <li className="comp-item"><span className="comp-icon">→</span><span>1–10 severity · LLM root-cause hypothesis</span></li>
-          <li className="comp-item"><span className="comp-icon">→</span><span><strong>7-page Power BI cockpit</strong> · readable by all</span></li>
-          <li className="comp-item"><span className="comp-icon">→</span><span>Found Tuesday 09:30 peak · invisible before</span></li>
-        </ul>
-      </div>
+
+      {/* LIGHTBOX MODAL */}
+      {lightbox && (
+        <div className="lightbox-modal" onClick={() => setLightbox(null)}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Close">✕</button>
+            <div className={`lightbox-tag ${lightbox}`}>
+              {lightbox === 'before' ? '⚠ BEFORE' : '✓ AFTER'}
+            </div>
+            <img src={lightbox === 'before' ? 'assets/dynatrace-before.png' : 'assets/cockpit-1.png'} alt="Full screen"/>
+            <div className="lightbox-caption">
+              <strong>{lightbox === 'before' ? 'Raw Dynatrace · Problems list' : 'AIOps Cockpit · Global overview'}</strong>
+              <span>{lightbox === 'before' ? '163 problems · 30-day limit · cryptic codes · no prioritization' : '88,343 incidents · 90-day analysis · ranked by Mistral 7B · readable by all'}</span>
+            </div>
+            <div className="lightbox-hint">Press <kbd>ESC</kbd> or click outside to close</div>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 // ========== SLIDE: COCKPIT ==========
 const COCKPIT_PAGES = [
