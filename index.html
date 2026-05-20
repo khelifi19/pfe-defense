@@ -1760,7 +1760,7 @@ const STAGE_CARDS = [
   { id: 'ca', image: 'assets/ca-real.png', name: 'Crédit Agricole', tag: '01 · The Group', backTitle: 'A cooperative banking giant', backDesc: 'Founded in 1894 as a cooperative for French farmers — today the <em>9th largest bank worldwide</em>. A mutual bank, owned by its 54M member-customers.', statNum: '54M', statLabel: 'customers · 47 countries', backVariant: '' },
   { id: 'cagip', image: 'assets/cagip-building.png', name: 'CA-GIP', tag: '02 · My host organisation', backTitle: 'The shared infrastructure', backDesc: 'Created in 2019 as <em>the centralised IT platform</em> for every entity in the Group. 2,068 employees · 6 datacenters · €1.244 Bn budget.', statNum: '80%', statLabel: 'of Group IT production', backVariant: 'green-bg' },
   { id: 'lcl', image: 'assets/lcl-real.png', name: 'LCL', tag: '03 · The monitored entity', backTitle: 'LCL', backDesc: 'One of France\'s largest retail banks — <em>the main entity I monitored.</em> Its applications generated the 88,343 incidents I analysed.', statNum: '20.3K', statLabel: 'workstations monitored', backVariant: 'amber-bg' },
-  { id: 'cod', isCOD: true, name: 'COD', tag: '04 · My team', backTitle: 'Centre of DevOps', backDesc: 'CA-GIP\'s engineering organisation — four <em>squads</em>: Tools, Cloud, DevOps, Delivery. <strong>I crossed two of them</strong> in six months.', statNum: '2 / 4', statLabel: 'squads · one trajectory', backVariant: 'violet-bg' }
+  { id: 'cod', isCOD: true, name: 'COD', tag: '04 · My team', backTitle: 'Centre of DevOps', backDesc: 'CA-GIP\'s engineering organisation — four <em>squads</em>: Dev Factory, Cloud, InnoTech, Delivery. <strong>I crossed two of them</strong> in six months.', statNum: '2 / 4', statLabel: 'squads · one trajectory', backVariant: 'violet-bg' }
 ];
 
 const FlipCard = ({ card }) => {
@@ -1786,18 +1786,19 @@ const FlipCard = ({ card }) => {
               <g transform="translate(200, 220)">
                 <circle r="58" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.25)" strokeWidth="2"/>
                 <text y="6" textAnchor="middle" fontSize="20" fill="#fff" fontFamily="JetBrains Mono" fontWeight="700" letterSpacing="2">COD</text>
-                <circle cx="0" cy="-110" r="26" fill="#34c77a" stroke="#fff" strokeWidth="2.5"/>
-                <text y="-106" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">TOOLS</text>
-                <circle cx="110" cy="0" r="26" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2.5"/>
+                <circle cx="0" cy="-110" r="32" fill="#34c77a" stroke="#fff" strokeWidth="2.5"/>
+                <text y="-114" textAnchor="middle" fontSize="8" fill="#002A54" fontWeight="700">DEV</text>
+                <text y="-104" textAnchor="middle" fontSize="8" fill="#002A54" fontWeight="700">FACTORY</text>
+                <circle cx="110" cy="0" r="32" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2.5"/>
                 <text x="110" y="4" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">CLOUD</text>
-                <circle cx="0" cy="110" r="26" fill="#34c77a" stroke="#fff" strokeWidth="2.5"/>
-                <text y="114" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">DEVOPS</text>
-                <circle cx="-110" cy="0" r="26" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2.5"/>
+                <circle cx="0" cy="110" r="32" fill="#34c77a" stroke="#fff" strokeWidth="2.5"/>
+                <text y="114" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">INNOTECH</text>
+                <circle cx="-110" cy="0" r="32" fill="rgba(255,255,255,0.95)" stroke="#fff" strokeWidth="2.5"/>
                 <text x="-110" y="4" textAnchor="middle" fontSize="9" fill="#002A54" fontWeight="700">DELIVERY</text>
-                <line x1="0" y1="-84" x2="0" y2="-58" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
-                <line x1="84" y1="0" x2="58" y2="0" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
-                <line x1="0" y1="84" x2="0" y2="58" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
-                <line x1="-84" y1="0" x2="-58" y2="0" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="0" y1="-78" x2="0" y2="-58" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="78" y1="0" x2="58" y2="0" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="0" y1="78" x2="0" y2="58" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+                <line x1="-78" y1="0" x2="-58" y2="0" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
               </g>
             </svg>
           </div>
@@ -1934,7 +1935,7 @@ const SlideJourney = () => {
               <div className="journey-flip-content">
                 <div className="journey-flip-num">PHASE 01 · NOV — JAN</div>
                 <h3 className="journey-flip-title">"Upload a file."<br/>Day 1, on a ticket.</h3>
-                <div className="journey-flip-subtitle">Squad Tools · Jira DEV-895</div>
+                <div className="journey-flip-subtitle">Dev Factory · Jira DEV-895</div>
               </div>
             </div>
             <div className="journey-flip-side journey-flip-back">
@@ -1959,7 +1960,7 @@ const SlideJourney = () => {
               <div className="journey-flip-content">
                 <div className="journey-flip-num">PHASE 02 · FEB — MAY</div>
                 <h3 className="journey-flip-title">"Why does nobody know<br/>what failed last month?"</h3>
-                <div className="journey-flip-subtitle">Squad DevOps · AIOps Cockpit</div>
+                <div className="journey-flip-subtitle">InnoTech · AIOps Cockpit</div>
               </div>
             </div>
             <div className="journey-flip-side journey-flip-back">
